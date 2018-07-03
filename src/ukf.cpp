@@ -377,11 +377,9 @@ void UKF::Update(MeasurementPackage meas_package, MatrixXd Zsig, int n_z) {
 
     if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
         S = S + R_radar_;
-        NIS_radar_ = z.transpose() * S.inverse() * z;
     }
     else if(meas_package.sensor_type_ == MeasurementPackage::LASER) {
         S = S + R_lidar_;
-        NIS_laser_ = z.transpose() * S.inverse() * z;
     }
 
     //create matrix for cross correlation Tc
@@ -420,11 +418,11 @@ void UKF::Update(MeasurementPackage meas_package, MatrixXd Zsig, int n_z) {
     x_ = x_ + K * z_diff;
     P_ = P_ - K*S*K.transpose();
 
-//  // Calculate NIS
-//  if (meas_package.sensor_type_ == MeasurementPackage::RADAR){ // Radar
-//    NIS_radar_ = z.transpose() * S.inverse() * z;
-//  }
-//  else if (meas_package.sensor_type_ == MeasurementPackage::LASER){ // Lidar
-//    NIS_laser_ = z.transpose() * S.inverse() * z;
-//  }
+  // Calculate NIS
+  if (meas_package.sensor_type_ == MeasurementPackage::RADAR){ // Radar
+    NIS_radar_ = z_diff.transpose() * S.inverse() * z_diff;
+  }
+  else if (meas_package.sensor_type_ == MeasurementPackage::LASER){ // Lidar
+    NIS_laser_ = z_diff.transpose() * S.inverse() * z_diff;
+  }
 }

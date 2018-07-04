@@ -14,10 +14,10 @@ Once the install for uWebSocketIO is complete, the main program can be built and
 3. cmake ..
 4. make
 5. For simulation in Simulator:
-   ./UnscentedKF simulation
+   "./UnscentedKF simulation" or "./UnscentedKF"
 
    If you want to output the results for visualization :
-   ./UnscentedKF check ../data/obj_pose-laser-radar-synthetic-input.txt ../data/output.txt
+   "./UnscentedKF check ../data/obj_pose-laser-radar-synthetic-input.txt ../data/output.txt"
 
 6. Using ukf-visualization-extended.ipynb to visualization.
 

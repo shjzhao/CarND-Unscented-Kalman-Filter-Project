@@ -37,44 +37,50 @@ std::string hasData(std::string s) {
   return "";
 }
 
-void check_arguments(int argc, char* argv[]) {
+string check_arguments(int argc, char* argv[]) {
   string usage_instructions = "Usage instructions: ";
   usage_instructions += argv[0];
   usage_instructions += " check/simulation path/to/input.txt output.txt";
-  string mode_select = argv[1];
   string simu = "simulation";
   string check = "check";
+  string mode_select = "simulation";
 
   bool has_valid_args = false;
 
   // make sure the user has provided input and output files
   if (argc == 1) {
-    cerr << usage_instructions << endl;
-  } else if (argc == 2) {
-    if(mode_select == simu){
-      has_valid_args = true;
-    }
-    else{
-      cerr << usage_instructions << endl;
-    }
-  } else if (argc == 3) {
-    if(mode_select == check){
-      cerr << "Please include an output file.\n" << usage_instructions << endl;
-    }
-    else if (mode_select == simu){
-      has_valid_args = true;
-    }
-  } else if (argc == 4) {
-    if (mode_select == check || mode_select == simu) {
-      has_valid_args = true;
-    }
-  } else if (argc > 4) {
-    cerr << "Too many arguments.\n" << usage_instructions << endl;
-  }
+    cout << usage_instructions << endl;
+    cout << "defaul:simulation!" << endl;
+    has_valid_args = true;
+  } else{
+      mode_select = argv[1];
 
+      if (argc == 2) {
+          if(mode_select == simu){
+              has_valid_args = true;
+          }
+          else{
+              cerr << usage_instructions << endl;
+          }
+      } else if (argc == 3) {
+          if(mode_select == check){
+              cerr << "Please include an output file.\n" << usage_instructions << endl;
+          }
+          else if (mode_select == simu){
+              has_valid_args = true;
+          }
+      } else if (argc == 4) {
+          if (mode_select == check || mode_select == simu) {
+              has_valid_args = true;
+          }
+      } else if (argc > 4) {
+          cerr << "Too many arguments.\n" << usage_instructions << endl;
+      }
+  }
   if (!has_valid_args) {
     exit(EXIT_FAILURE);
   }
+  return mode_select;
 }
 
 void check_files(ifstream& in_file, string& in_name,
@@ -92,9 +98,7 @@ void check_files(ifstream& in_file, string& in_name,
 
 int main(int argc, char* argv[]) {
 
-  check_arguments(argc, argv);
-
-  string mode_select = argv[1];
+  string mode_select = check_arguments(argc, argv);
   string simu = "simulation";
   string check = "check";
 
